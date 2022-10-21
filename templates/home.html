@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %} Home {% endblock %}
+
+{% block heading %}
+<center>Meal Planner</center>
+{% endblock %}
+
+{% block content%}
+  <table>
+    <tr>
+      <th>Image</th>
+      <th>Name</th>
+      <th>Diet</th>
+      <th>Ingredients</th>
+    </tr>
+    {% for dish in dishes %}
+    <tr>
+        <td >
+            <a href="{{url_for('dish_details', dish_id = dish['id'])}}">
+                <img src= "{{url_for('static', filename = dish["id"]|string+".jpg")}}" height="100" >
+            </a>
+        </td>
+        <td>{{ dish.name }}</td>
+        <td>{{ dish.diet }}</td>
+        <td>{{ dish.ingredients }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

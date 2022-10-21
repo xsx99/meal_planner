@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %} {{dish["name"]}}'s Details {% endblock %} 
+
+{% block content %} 
+    <div style="float:left; border-style:double;">
+        <img src= "{{url_for('static', filename = dish.id|string+".jpg")}}" height="350" ><br>
+        <button style="background-color:tomato" onclick="location.href='{{ url_for('delete_dish', dish_id = dish.id)}}'"> Delete Dish </button>
+    </div> 
+    <div style="float:left; margin:10px;">
+        <h1 class="title">{{ dish.name }}</h1>
+        <p><b>diet: &nbsp;</b> {{dish.diet}}</p>
+        <p><b>ingredients: &nbsp;</b> {{dish.ingredients}}</p>
+        <p><b>instructions: &nbsp;</b> {{dish.instructions}}</p>        
+        <hr> 
+        
+        <h2> Edit Dish </h2>
+        <!-- Error Message  -->
+        {% if message %}
+            <span style="background-color:tomato">
+            {{ message }}
+            <span>
+            <br>
+        {% endif %}
+        <!--  -->
+        <!-- Form for Editing the Dish -->
+        <form action="{{url_for('dish_details', dish_id = dish.id)}}" method="POST" style="padding:5px;">
+            {{ form.name.label }}: <br>
+            {{ form.name(value = dish.name) }} 
+            <br>
+            {{ form.diet.label }}: <br>
+            {{ form.diet(value = dish.diet) }} 
+            <br>
+            {{ form.ingredients.label }}: <br>
+            {{ form.ingredients(value = dish.ingredients) }} 
+            <br>
+            {{ form.instructions.label }}: <br>
+            {{ form.instructions(value = dish.instructions) }} 
+            <br>  
+            <br>
+            {{ form.csrf_token }}         
+            {{ form.submit }}
+        </form>
+        <!--  -->
+    </div>
+{% endblock %}
